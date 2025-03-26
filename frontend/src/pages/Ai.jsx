@@ -118,7 +118,7 @@ const Ai = () => {
 
   const sendTextToServer = async (text) => {
     try {
-      const response = await axios.post('https://your-server-endpoint.com/chat', { 
+      const response = await axios.post(`${import.meta.env.PYTHON_BASE_URL}/voicecare-processing`, { 
         text, 
         user_id: username  
       });

@@ -40,7 +40,7 @@ const Form = () => {
   
     try {
       const response = await axios.post(
-        "http://your-azure-api-url.com/insert", // Replace with actual API URL
+        `${import.meta.env.PYTHON_BASE_URL}/voicecare-form`, // Replace with actual API URL
         formData
       );
   
