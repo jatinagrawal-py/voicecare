@@ -1,0 +1,24 @@
+@import "tailwindcss";
+
+@keyframes typing {
+    from {
+      width: 0;
+    }
+    to {
+      width: 100%;
+    }
+  }
+  
+  .typing-effect {
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    animation: typing 5s steps(20, end) forwards;
+    max-width: 100%; 
+  }
+
+  body{
+    background-color: black;
+  }
+  
+  
