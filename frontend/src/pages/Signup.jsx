@@ -67,7 +67,7 @@ const Signup = () => {
     <div className="h-screen bg-black">
       <NavbarL/>
       <div className="flex items-center justify-center h-screen ">
-        <div className="bg-slate-300 rounded-lg shadow-xl p-8 w-full max-w-md">
+        <div className="bg-slate-300 rounded-lg shadow-xl p-8 w-full max-w-md m-6">
           <h2 className="text-3xl font-bold text-center mb-2 text-gray-800">Signup</h2>
           
           <form onSubmit={submitHandel} className="space-y-6">
