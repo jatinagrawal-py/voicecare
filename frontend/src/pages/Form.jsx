@@ -19,7 +19,13 @@ const Form = () => {
       allergies: '',
       mobility: '',
       medications: [
-        { name: '', dosage: '', time: '' }
+        { 
+          name: '', 
+          frequency_per_day: 1, 
+          dosage_times: [
+            { time: '', dosage: '' }
+          ]
+        }
       ]
     },
     daily_routine: {
@@ -36,6 +42,7 @@ const Form = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     const navigate = useNavigate(); // Initialize useNavigate
   
     try {
@@ -52,7 +59,6 @@ const Form = () => {
     }
   };
 
-  const [medicationCount, setMedicationCount] = useState(1);
 
   const handleBasicInfoChange = (e) => {
     const { name, value } = e.target;
@@ -76,12 +82,27 @@ const Form = () => {
     });
   };
 
-  const handleMedicationChange = (index, e) => {
-    const { name, value } = e.target;
+  const handleMedicationChange = (medicationIndex, field, value) => {
     const updatedMedications = [...formData.medical_info.medications];
-    updatedMedications[index] = {
-      ...updatedMedications[index],
-      [name]: value
+    updatedMedications[medicationIndex] = {
+      ...updatedMedications[medicationIndex],
+      [field]: value
+    };
+
+    setFormData({
+      ...formData,
+      medical_info: {
+        ...formData.medical_info,
+        medications: updatedMedications
+      }
+    });
+  };
+
+  const handleDosageTimeChange = (medicationIndex, dosageTimeIndex, field, value) => {
+    const updatedMedications = [...formData.medical_info.medications];
+    updatedMedications[medicationIndex].dosage_times[dosageTimeIndex] = {
+      ...updatedMedications[medicationIndex].dosage_times[dosageTimeIndex],
+      [field]: value
     };
 
     setFormData({
@@ -123,16 +144,21 @@ const Form = () => {
         ...formData.medical_info,
         medications: [
           ...formData.medical_info.medications,
-          { name: '', dosage: '', time: '' }
+          { 
+            name: '', 
+            frequency_per_day: 1, 
+            dosage_times: [
+              { time: '', dosage: '' }
+            ]
+          }
         ]
       }
     });
-    setMedicationCount(medicationCount + 1);
   };
 
-  const removeMedication = (index) => {
-    if (medicationCount > 1) {
-      const updatedMedications = formData.medical_info.medications.filter((_, i) => i !== index);
+  const removeMedication = (medicationIndex) => {
+    if (formData.medical_info.medications.length > 1) {
+      const updatedMedications = formData.medical_info.medications.filter((_, i) => i !== medicationIndex);
       setFormData({
         ...formData,
         medical_info: {
@@ -140,7 +166,34 @@ const Form = () => {
           medications: updatedMedications
         }
       });
-      setMedicationCount(medicationCount - 1);
+    }
+  };
+
+  const addDosageTime = (medicationIndex) => {
+    const updatedMedications = [...formData.medical_info.medications];
+    updatedMedications[medicationIndex].dosage_times.push({ time: '', dosage: '' });
+    
+    setFormData({
+      ...formData,
+      medical_info: {
+        ...formData.medical_info,
+        medications: updatedMedications
+      }
+    });
+  };
+
+  const removeDosageTime = (medicationIndex, dosageTimeIndex) => {
+    const updatedMedications = [...formData.medical_info.medications];
+    if (updatedMedications[medicationIndex].dosage_times.length > 1) {
+      updatedMedications[medicationIndex].dosage_times = updatedMedications[medicationIndex].dosage_times.filter((_, i) => i !== dosageTimeIndex);
+      
+      setFormData({
+        ...formData,
+        medical_info: {
+          ...formData.medical_info,
+          medications: updatedMedications
+        }
+      });
     }
   };
 
@@ -299,77 +352,120 @@ const Form = () => {
                 </div>
               </div>
               
-              <div className="mb-4">
-                <div className="flex items-center justify-between">
-                  <h4 className="text-lg font-medium text-gray-700">Medications</h4>
-                  <button 
-                    type="button" 
-                    onClick={addMedication}
-                    className="flex items-center justify-center bg-purple-600 text-white p-2 rounded-md hover:bg-purple-700"
-                  >
-                    <Plus size={16} />
-                    <span className="ml-1">Add Medication</span>
-                  </button>
-                </div>
-                
-                {formData.medical_info.medications.map((medication, index) => (
-                  <div key={index} className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4 p-4 bg-gray-50 rounded-md">
+              <div className="border-t border-gray-200 pt-6">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-xl font-semibold text-gray-700">Medications</h3>
+                <button 
+                  type="button" 
+                  onClick={addMedication}
+                  className="flex items-center justify-center bg-purple-600 text-white p-2 rounded-md hover:bg-purple-700"
+                >
+                  <Plus size={16} />
+                  <span className="ml-1">Add Medication</span>
+                </button>
+              </div>
+              
+              {formData.medical_info.medications.map((medication, medicationIndex) => (
+                <div 
+                  key={medicationIndex} 
+                  className="mb-6 p-4 bg-gray-50 rounded-md border border-gray-200"
+                >
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                     <div className="space-y-2">
-                      <label htmlFor={`med-name-${index}`} className="block text-sm font-medium text-gray-700">
-                        Medication Name
+                      <label className="block text-sm font-medium text-gray-700">
+                        Medicine Name
                       </label>
                       <input
                         type="text"
-                        id={`med-name-${index}`}
-                        name="name"
                         value={medication.name}
-                        onChange={(e) => handleMedicationChange(index, e)}
-                        placeholder="Medication Name"
+                        onChange={(e) => handleMedicationChange(medicationIndex, 'name', e.target.value)}
+                        placeholder="Enter medicine name"
                         className="bg-gradient-to-b from-blue-400 to-purple-500 text-white placeholder-white/70 w-full px-4 py-3 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600"
                       />
                     </div>
                     <div className="space-y-2">
-                      <label htmlFor={`med-dosage-${index}`} className="block text-sm font-medium text-gray-700">
-                        Dosage
+                      <label className="block text-sm font-medium text-gray-700">
+                        Daily Frequency
                       </label>
-                      <input
-                        type="text"
-                        id={`med-dosage-${index}`}
-                        name="dosage"
-                        value={medication.dosage}
-                        onChange={(e) => handleMedicationChange(index, e)}
-                        placeholder="Dosage"
-                        className="bg-gradient-to-b from-blue-400 to-purple-500 text-white placeholder-white/70 w-full px-4 py-3 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600"
-                      />
-                    </div>
-                    <div className="space-y-2 relative">
-                      <label htmlFor={`med-time-${index}`} className="block text-sm font-medium text-gray-700">
-                        Time
-                      </label>
-                      <div className="flex items-center space-x-2">
-                        <input
-                          type="text"
-                          id={`med-time-${index}`}
-                          name="time"
-                          value={medication.time}
-                          onChange={(e) => handleMedicationChange(index, e)}
-                          placeholder="When to take"
-                          className="bg-gradient-to-b from-blue-400 to-purple-500 text-white placeholder-white/70 w-full px-4 py-3 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600"
-                        />
-                        {index > 0 && (
-                          <button 
-                            type="button" 
-                            onClick={() => removeMedication(index)}
-                            className="bg-red-500 text-white p-3 rounded-md hover:bg-red-600"
-                          >
-                            <Minus size={16} />
-                          </button>
-                        )}
-                      </div>
+                      <select
+                        value={medication.frequency_per_day}
+                        onChange={(e) => handleMedicationChange(medicationIndex, 'frequency_per_day', parseInt(e.target.value))}
+                        className="bg-gradient-to-b from-blue-400 to-purple-500  text-white w-full px-4 py-3 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600"
+                      >
+                        {[1, 2, 3, 4].map(num => (
+                          <option key={num} value={num} className="bg-gray-800">{num} time{num > 1 ? 's' : ''} per day</option>
+                        ))}
+                      </select>
                     </div>
                   </div>
-                ))}
-              </div>
+                  
+                  <div className="space-y-4">
+                    <div className="flex justify-between items-center">
+                      <h4 className="text-lg font-medium text-gray-700">Dosage Times</h4>
+                      <button 
+                        type="button" 
+                        onClick={() => addDosageTime(medicationIndex)}
+                        className="flex items-center justify-center bg-green-500 text-white p-2 rounded-md hover:bg-green-600"
+                      >
+                        <Plus size={16} />
+                        <span className="ml-1">Add Dosage Time</span>
+                      </button>
+                    </div>
+                    
+                    {medication.dosage_times.map((dosageTime, dosageTimeIndex) => (
+                      <div 
+                        key={dosageTimeIndex} 
+                        className="grid grid-cols-1 md:grid-cols-3 gap-4 bg-white p-4 rounded-md"
+                      >
+                        <div className="space-y-2">
+                          <label className="block text-sm font-medium text-gray-700">
+                            Time (24-hour format)
+                          </label>
+                          <input
+                            type="time"
+                            value={dosageTime.time}
+                            onChange={(e) => handleDosageTimeChange(medicationIndex, dosageTimeIndex, 'time', e.target.value)}
+                            className="bg-gradient-to-b from-blue-400 to-purple-500 text-white w-full px-4 py-3 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600"
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <label className="block text-sm font-medium text-gray-700">
+                            Dosage
+                          </label>
+                          <input
+                            type="text"
+                            value={dosageTime.dosage}
+                            onChange={(e) => handleDosageTimeChange(medicationIndex, dosageTimeIndex, 'dosage', e.target.value)}
+                            placeholder="e.g. 1 tablet, 2ml"
+                            className="bg-gradient-to-b from-blue-400 to-purple-500 text-white placeholder-white/70 w-full px-4 py-3 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600"
+                          />
+                        </div>
+                        <div className="flex items-end space-x-2">
+                          {medication.dosage_times.length > 1 && (
+                            <button 
+                              type="button" 
+                              onClick={() => removeDosageTime(medicationIndex, dosageTimeIndex)}
+                              className="bg-red-500 text-white p-3 rounded-md hover:bg-red-600 flex items-center"
+                            >
+                              <Minus size={16} />
+                            </button>
+                          )}
+                          {medicationIndex > 0 && dosageTimeIndex === 0 && (
+                            <button 
+                              type="button" 
+                              onClick={() => removeMedication(medicationIndex)}
+                              className="bg-red-600 text-white p-3 rounded-md hover:bg-red-700 flex items-center"
+                            >
+                              Remove Medication
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
             </div>
 
             {/* Daily Routine Section */}
