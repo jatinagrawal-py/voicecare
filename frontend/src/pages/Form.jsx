@@ -47,7 +47,7 @@ const Form = () => {
   
     try {
       const response = await axios.post(
-        `${import.meta.env.PYTHON_BASE_URL}/voicecare-form`, // Replace with actual API URL
+        `${import.meta.env.VITE_PYTHON_BASE_URL}/voicecare-form`, // Replace with actual API URL
         formData
       );
   

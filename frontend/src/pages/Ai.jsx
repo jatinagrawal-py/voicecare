@@ -127,9 +127,10 @@ const Ai = () => {
 
   const sendTextToServer = async (text) => {
     try {
-      const response = await axios.post(`${import.meta.env.PYTHON_BASE_URL}/voicecare-processing`, { 
+      
+      const response = await axios.post(`${import.meta.env.VITE_PYTHON_BASE_URL}/voicecare-processing`, { 
         text, 
-        user_id: username  
+        user_id: username 
       });
 
       if (response.status === 200 || response.status === 201) {
