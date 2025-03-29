@@ -39,11 +39,12 @@ const Form = () => {
       caregiver: ''
     }
   });
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const navigate = useNavigate(); // Initialize useNavigate
+
   
     try {
       const response = await axios.post(
