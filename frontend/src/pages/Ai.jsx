@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import ghumtihui from "../componentsHome/ghumtihui.mp4";
 import stable from "./stable.mp4";
 import axios from 'axios';
-import { AuthContext } from './AuthContext';
 import { Mic, Square } from 'lucide-react';
 
 // Import the Azure Speech SDK
@@ -36,7 +35,7 @@ const Navbar = () => {
 
 
 const Ai = () => {
-  const { username } = useContext(AuthContext);
+  const [username, setUsername] = useState(localStorage.getItem("username") || "");
   const [isListening, setIsListening] = useState(false);
   const [processingText, setProcessingText] = useState(false);
   const [responseText, setResponseText] = useState("");
@@ -127,11 +126,19 @@ const Ai = () => {
 
   const sendTextToServer = async (text) => {
     try {
-      
-      const response = await axios.post(`${import.meta.env.VITE_PYTHON_BASE_URL}/voicecare-processing`, { 
-        text, 
-        user_id: username 
-      });
+      const response = await axios.post(
+        'https://voicecare-achrbgdqe2bkesdm.canadacentral-01.azurewebsites.net/voicecare-processing', 
+        { 
+          text, 
+          user_id: username 
+        },
+        {
+          withCredentials: true,
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+      );
 
       if (response.status === 200 || response.status === 201) {
         return response.data.response;
@@ -142,7 +149,7 @@ const Ai = () => {
       console.error("Error sending text to server:", error.response?.data || error.message);
       throw error;
     }
-  };
+};
 
   const speakResponse = (text) => {
     if (!synthesizer.current) return;

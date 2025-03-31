@@ -2,10 +2,10 @@ import React, {useContext , useState } from 'react';
 import { Plus, Minus, Save } from 'lucide-react';
 import axios from 'axios'
 import { useNavigate} from "react-router-dom";
-import { AuthContext } from './AuthContext';
+
 
 const Form = () => {
-  const { username } = useContext(AuthContext);
+  const [username, setUsername] = useState(localStorage.getItem("username") || "");
   const [formData, setFormData] = useState({
     user_id: username,
     basic_info: {
@@ -44,16 +44,22 @@ const Form = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-
+    console.log(formData)
   
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_PYTHON_BASE_URL}/voicecare-form`, // Replace with actual API URL
-        formData
+        'https://voicecare-achrbgdqe2bkesdm.canadacentral-01.azurewebsites.net/voicecare-form',
+        formData,
+        {
+          withCredentials: true,  // Add this line
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
       );
   
       if (response.status === 200 || response.status === 201) {
-        navigate("/voicecare-ai"); // Navigate on success
+        navigate("/voicecare-ai");
       }
     } catch (error) {
       console.error("Error:", error.response ? error.response.data : error.message);
