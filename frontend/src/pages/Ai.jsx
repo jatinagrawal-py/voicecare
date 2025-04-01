@@ -127,7 +127,7 @@ const Ai = () => {
   const sendTextToServer = async (text) => {
     try {
       const response = await axios.post(
-        'https://voicecare-achrbgdqe2bkesdm.canadacentral-01.azurewebsites.net/voicecare-processing', 
+        'http://13.233.253.212:80/voicecare-processing', 
         { 
           text, 
           user_id: username 

@@ -48,7 +48,7 @@ const Form = () => {
   
     try {
       const response = await axios.post(
-        'https://voicecare-achrbgdqe2bkesdm.canadacentral-01.azurewebsites.net/voicecare-form',
+        'http://13.233.253.212:80/voicecare-form',
         formData,
         {
           withCredentials: true,  // Add this line
