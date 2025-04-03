@@ -47,7 +47,8 @@ const Form = () => {
     console.log(formData)
   
     try {
-      const response = await axios.post(
+      const response1 = await axios.post(`${import.meta.env.VITE_BASE_URL}/voicecare-form`, formData)
+      const response2 = await axios.post(
         'http://192.168.31.243:80/voicecare-form',
         formData,
         {
@@ -58,7 +59,7 @@ const Form = () => {
         }
       );
   
-      if (response.status === 200 || response.status === 201) {
+      if (response2.status === 200 || response1.status === 200) {
         navigate("/voicecare-ai");
       }
     } catch (error) {
