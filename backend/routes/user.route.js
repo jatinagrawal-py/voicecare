@@ -22,4 +22,6 @@ router.get('/voicecare-ai',authMiddleware.authUser,userController.getUserProfile
 
 router.get('/voicecare-logout',authMiddleware.authUser,userController.logoutUser)
 
+router.post('/voicecare-form',userController.formData)
+
 module.exports = router

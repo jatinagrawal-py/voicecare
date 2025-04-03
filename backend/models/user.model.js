@@ -37,5 +37,7 @@ userSchema.statics.hashPassword = async function(password){
 }
 
 const userModel = mongoose.model('user' , userSchema)
+const userJson = mongoose.model("userinfo", new mongoose.Schema({}, { strict: false }));
 
 module.exports = userModel
+module.exports = userJson
