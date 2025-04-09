@@ -9,7 +9,7 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <center className='text-2xl md:text-2xl font-bold leading-tight mb-6 text-white'><span className='bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent'>About Team</span></center>
         {/* Team Section with Photos */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+        <div className="flex justify-center items-center gap-8 mb-12">
           {/* Jatin's Card */}
           <div className="bg-black/30 rounded-xl p-6 border border-gray-800 hover:border-purple-500 transition duration-300 flex flex-col items-center">
             {/* Circular Photo */}
@@ -69,6 +69,34 @@ const Footer = () => {
               </a>
             </div>
           </div>
+          <div className="bg-black/30 rounded-xl p-6 border border-gray-800 hover:border-purple-500 transition duration-300 flex flex-col items-center">
+            {/* Circular Photo */}
+            <div className="w-32 h-32 rounded-full overflow-hidden border-2 border-purple-500 mb-4">
+              <img 
+                src="/api/placeholder/150/150" 
+                alt="Hiyansh Chandel" 
+                className="w-full h-full object-cover"
+              />
+            </div>
+            
+            {/* Details */}
+            <h3 className="text-xl font-bold text-white">Mohammad Shehzan</h3>
+            <p className="text-gray-400 mt-1 text-center">AI & Data Engineering</p>
+            <p className="text-gray-400 text-center">NIT Jaipur</p>
+            
+            {/* Social Links */}
+            <div className="flex space-x-4 mt-4">
+              <a href="#" className="bg-gray-800 p-2 rounded-full text-gray-400 hover:text-blue-500 hover:bg-gray-700 transition-all">
+                <Github size={20} />
+              </a>
+              <a href="#" className="bg-gray-800 p-2 rounded-full text-gray-400 hover:text-blue-600 hover:bg-gray-700 transition-all">
+                <Linkedin size={20} />
+              </a>
+              <a href="#" className="bg-gray-800 p-2 rounded-full text-gray-400 hover:text-pink-500 hover:bg-gray-700 transition-all">
+                <Instagram size={20} />
+              </a>
+            </div>
+          </div>
         </div>
         
         {/* Full-width VoiceCare Section */}
@@ -86,7 +114,7 @@ const Footer = () => {
         
         {/* Copyright Section */}
         <div className="mt-12 border-t border-gray-800 pt-8">
-          <p className="text-gray-400 text-center">&copy; 2025 VoiceCare Team - Hiyansh Chandel , Jatin Agrawal and Mohomad shehzan. All rights reserved.</p>
+          <p className="text-gray-400 text-center">&copy; 2025 VoiceCare Team - Hiyansh Chandel , Jatin Agrawal and Mohammad Shehzan. All rights reserved.</p>
         </div>
       </div>
     </footer>
