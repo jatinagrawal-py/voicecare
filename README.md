@@ -6,7 +6,7 @@ VoiceCare is an AI-driven voice assistant designed specifically for elderly indi
 
 🚫 **Note**: The web app is currently **not functional** due to the expiry of AWS hosting for the Flask-based AI backend and deactivation of Azure STT/TTS services. The frontend is still accessible for UI preview.
 
-🔗 **Frontend Demo**: [https://voicecare-ten.vercel.app](https://voicecare-ten.vercel.app)  
+🔗 **Frontend Demo (fully responsive)**: [https://voicecare-ten.vercel.app](https://voicecare-ten.vercel.app)  
 🌐 **Backend (Auth Service)**: Hosted on Render
 
 ---
