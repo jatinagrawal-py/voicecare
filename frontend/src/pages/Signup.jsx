@@ -3,6 +3,7 @@ import axios from 'axios'
 import { useNavigate} from "react-router-dom";
 import { Eye, EyeOff } from 'lucide-react';
 import NavbarL from '../componentsLogin/NavbarL';
+import { toast } from 'react-toastify';
 
 const Signup = () => {
   const navigate = useNavigate()
@@ -14,26 +15,37 @@ const Signup = () => {
     password : ''
   })
 
-  const submitHandel = async(e)=>{
-    e.preventDefault()
-
-    const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/voicecare-signup`, signupData)
-
-    if(response.status==201){
-      const data = response.data
-      
-      localStorage.setItem('token',data.token)
-      localStorage.setItem('username', data.user.username);
-      navigate('/voicecare-form')
+  const submitHandel = async (e) => {
+    e.preventDefault();
+  
+    try {
+      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/voicecare-signup`, signupData);
+  
+      if (response.status === 201) {
+        const data = response.data;
+  
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('username', data.user.username);
+        toast.success('Signup successful!');
+        navigate('/voicecare-form');
+  
+        setsignupData({
+          ...signupData,
+          username: '',
+          email: '',
+          password: '',
+        });
+      }
+    } catch (err) {
+      if (err.response?.data?.errors) {
+        err.response.data.errors.forEach(e => toast.error(e.msg));
+      } else if (err.response?.data?.message) {
+        toast.error(err.response.data.message);
+      } else {
+        toast.error('Signup failed. Please try again.');
+      }
     }
-
-    setsignupData({
-      ...signupData,
-      username:'',
-      email : '',
-      password:''
-    })
-  }
+  };
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);

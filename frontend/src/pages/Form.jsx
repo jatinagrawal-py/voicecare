@@ -2,6 +2,7 @@ import React, {useContext , useState } from 'react';
 import { Plus, Minus, Save } from 'lucide-react';
 import axios from 'axios'
 import { useNavigate} from "react-router-dom";
+import { toast } from 'react-toastify';
 
 
 const Form = () => {
@@ -43,27 +44,35 @@ const Form = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    console.log(formData)
+  
+    console.log(formData);
   
     try {
-      const response1 = await axios.post(`${import.meta.env.VITE_BASE_URL}/voicecare-form`, formData)
+      const response1 = await axios.post(`${import.meta.env.VITE_BASE_URL}/voicecare-form`, formData);
+  
       const response2 = await axios.post(
         'http://192.168.31.243:80/voicecare-form',
         formData,
         {
-          withCredentials: true,  // Add this line
+          withCredentials: true,
           headers: {
-            'Content-Type': 'application/json'
-          }
+            'Content-Type': 'application/json',
+          },
         }
       );
   
-      if (response2.status === 200 || response1.status === 200) {
-        navigate("/voicecare-ai");
+      if (response1.status === 200 || response2.status === 200) {
+        toast.success('Form submitted successfully!');
+        navigate('/voicecare-ai');
       }
     } catch (error) {
-      console.error("Error:", error.response ? error.response.data : error.message);
+      if (error.response?.data?.errors) {
+        error.response.data.errors.forEach(e => toast.error(e.msg));
+      } else if (error.response?.data?.message) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error('Form submission failed. Please try again.');
+      }
     }
   };
 
