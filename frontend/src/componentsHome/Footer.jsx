@@ -1,6 +1,8 @@
 import React from 'react'
 import { Github, Linkedin, Instagram } from 'lucide-react'
 import Jatin from "./jatin.jpg";
+import Hiyansh from "./hiyansh.jpeg"
+import Shehzan from "./shehzan.jpeg"
 
 
 const Footer = () => {
@@ -9,7 +11,7 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <center className='text-2xl md:text-2xl font-bold leading-tight mb-6 text-white'><span className='bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent'>About Team</span></center>
         {/* Team Section with Photos */}
-        <div className="flex justify-center items-center gap-8 mb-12">
+        <div className="flex flex-col md:flex-row justify-center items-center gap-8 mb-12">
           {/* Jatin's Card */}
           <div className="bg-black/30 rounded-xl p-6 border border-gray-800 hover:border-purple-500 transition duration-300 flex flex-col items-center">
             {/* Circular Photo */}
@@ -28,13 +30,13 @@ const Footer = () => {
             
             {/* Social Links */}
             <div className="flex space-x-4 mt-4">
-              <a href="#" className="bg-gray-800 p-2 rounded-full text-gray-400 hover:text-blue-500 hover:bg-gray-700 transition-all">
+              <a href="https://github.com/jatinagrawal-py" target="_blank" className="bg-gray-800 p-2 rounded-full text-gray-400 hover:text-blue-500 hover:bg-gray-700 transition-all">
                 <Github size={20} />
               </a>
-              <a href="#" className="bg-gray-800 p-2 rounded-full text-gray-400 hover:text-blue-600 hover:bg-gray-700 transition-all">
+              <a href="https://www.linkedin.com/in/jatin-agrawal-py" target='_blank' className="bg-gray-800 p-2 rounded-full text-gray-400 hover:text-blue-600 hover:bg-gray-700 transition-all">
                 <Linkedin size={20} />
               </a>
-              <a href="#" className="bg-gray-800 p-2 rounded-full text-gray-400 hover:text-pink-500 hover:bg-gray-700 transition-all">
+              <a href="https://www.instagram.com/imnot_jatinnnn" target='_blank' className="bg-gray-800 p-2 rounded-full text-gray-400 hover:text-pink-500 hover:bg-gray-700 transition-all">
                 <Instagram size={20} />
               </a>
             </div>
@@ -45,7 +47,7 @@ const Footer = () => {
             {/* Circular Photo */}
             <div className="w-32 h-32 rounded-full overflow-hidden border-2 border-purple-500 mb-4">
               <img 
-                src="/api/placeholder/150/150" 
+                src={Hiyansh} 
                 alt="Hiyansh Chandel" 
                 className="w-full h-full object-cover"
               />
@@ -61,10 +63,10 @@ const Footer = () => {
               <a href="#" className="bg-gray-800 p-2 rounded-full text-gray-400 hover:text-blue-500 hover:bg-gray-700 transition-all">
                 <Github size={20} />
               </a>
-              <a href="#" className="bg-gray-800 p-2 rounded-full text-gray-400 hover:text-blue-600 hover:bg-gray-700 transition-all">
+              <a href="https://www.linkedin.com/in/hiyansh-chandel-476203296" target='_blank' className="bg-gray-800 p-2 rounded-full text-gray-400 hover:text-blue-600 hover:bg-gray-700 transition-all">
                 <Linkedin size={20} />
               </a>
-              <a href="#" className="bg-gray-800 p-2 rounded-full text-gray-400 hover:text-pink-500 hover:bg-gray-700 transition-all">
+              <a href="https://www.instagram.com/hiyansh._" target='_blank' className="bg-gray-800 p-2 rounded-full text-gray-400 hover:text-pink-500 hover:bg-gray-700 transition-all">
                 <Instagram size={20} />
               </a>
             </div>
@@ -73,8 +75,8 @@ const Footer = () => {
             {/* Circular Photo */}
             <div className="w-32 h-32 rounded-full overflow-hidden border-2 border-purple-500 mb-4">
               <img 
-                src="/api/placeholder/150/150" 
-                alt="Hiyansh Chandel" 
+                src={Shehzan} 
+                alt="Shehzan" 
                 className="w-full h-full object-cover"
               />
             </div>
